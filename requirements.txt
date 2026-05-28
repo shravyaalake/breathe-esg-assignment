@@ -4,10 +4,12 @@ Django==6.0.5
 django-cors-headers==4.9.0
 djangorestframework==3.17.1
 drf-spectacular==0.29.0
+gunicorn==26.0.0
 inflection==0.5.1
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 numpy==2.4.6
+packaging==26.2
 pandas==3.0.3
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
