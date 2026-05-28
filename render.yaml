@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: breathe-esg-backend
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "cd backend && gunicorn config.wsgi:application"
