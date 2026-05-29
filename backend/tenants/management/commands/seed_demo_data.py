@@ -1,3 +1,4 @@
+# backend\tenants\management\commands\seed_demo_data.py
 from django.core.management.base import BaseCommand
 from tenants.models import Tenant, Facility
 from sources.models import SourceSystem
