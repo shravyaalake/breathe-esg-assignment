@@ -20,19 +20,14 @@ The application demonstrates:
 Frontend:
 
 ```text
-<PASTE_FRONTEND_URL_HERE>
+https://breathe-esg-assignment-omega.vercel.app/
 ```
 
-Backend API:
-
-```text
-<PASTE_BACKEND_URL_HERE>
-```
 
 Admin Panel:
 
 ```text
-<PASTE_BACKEND_URL_HERE>/admin
+https://breathe-esg-assignment-g4i4.onrender.com/admin/
 ```
 
 ---
@@ -364,7 +359,7 @@ Tenant ID = 1
 Source System ID = 1
 ```
 
-3. Upload sample CSV
+3. Upload sample CSV (https://github.com/shravyaalake/breathe-esg-assignment/tree/master/sample-data)
 4. Open Activity Review
 5. Review normalized activities
 6. Approve / Reject / Lock records
@@ -397,15 +392,13 @@ Uploaded CSV activity records may not persist permanently in the free environmen
 
 ---
 
-# Additional Documentation
+## Additional Documentation
 
-See:
-
-```text
-MODEL.md
-DECISIONS.md
-TRADEOFFS.md
-SOURCES.md
-```
+| Document | Description |
+|-----------|-------------|
+| [MODEL.md](./MODEL.md) | Core data model, entities, relationships, and traceability design |
+| [DECISIONS.md](./DECISIONS.md) | Key architectural and implementation decisions |
+| [TRADEOFFS.md](./TRADEOFFS.md) | Design tradeoffs, limitations, and future enhancements |
+| [SOURCES.md](./SOURCES.md) | ESG references, assumptions, and source-system research |
 
 for detailed architecture, decisions, tradeoffs and research.
