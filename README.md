@@ -359,7 +359,7 @@ Tenant ID = 1
 Source System ID = 1
 ```
 
-3. Upload sample CSV
+3. Upload sample CSV (https://github.com/shravyaalake/breathe-esg-assignment/tree/master/sample-data)
 4. Open Activity Review
 5. Review normalized activities
 6. Approve / Reject / Lock records
