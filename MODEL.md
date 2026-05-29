@@ -4,7 +4,7 @@
 
 The Breathe ESG prototype is designed to track emissions activity data for multiple tenants, ingest activity records from different business systems, normalize those records into a common internal format, and allow a reviewer to approve, reject, or lock normalized activities.
 
-The model is intentionally simple enough for the assignment scope, but structured so that it can grow into a production-grade ESG data platform.
+The model is structured so that it can grow into a production-grade ESG data platform.
 
 The main design goals are:
 

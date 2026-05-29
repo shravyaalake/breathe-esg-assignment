@@ -2,7 +2,7 @@
 
 ## Overview
 
-Given the limited scope and time of an engineering assignment, several production-grade features were intentionally not implemented.
+Given the limited scope and time of an engineering project, several production-grade features were intentionally not implemented.
 
 The goal was to prioritize:
 
@@ -60,7 +60,7 @@ A proper audit/versioning system requires:
 
 This significantly increases implementation complexity.
 
-For assignment scope, demonstrating source-of-truth tracking and review status was prioritized.
+For project scope, demonstrating source-of-truth tracking and review status was prioritized.
 
 ## Future Improvement
 
@@ -103,7 +103,7 @@ A complete authorization system would require:
 * protected APIs
 * role management UI
 
-The assignment did not explicitly require authentication.
+The project did not explicitly require authentication.
 
 Priority was given to:
 
@@ -169,7 +169,7 @@ industry-specific calculations
 regulatory validation
 ```
 
-Building this fully was outside assignment scope.
+Building this fully was outside project scope.
 
 Priority was given to demonstrating:
 

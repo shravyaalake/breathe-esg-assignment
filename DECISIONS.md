@@ -2,7 +2,7 @@
 
 ## Overview
 
-The assignment intentionally leaves several implementation areas ambiguous to simulate a real-world product and architecture exercise.
+The project intentionally leaves several implementation areas ambiguous to simulate a real-world product and architecture exercise.
 
 This document captures:
 
@@ -12,7 +12,7 @@ This document captures:
 * what was intentionally simplified
 * questions I would ask the PM if more clarification were available
 
-The goal was to make practical engineering decisions while staying within assignment scope and time constraints.
+The goal was to make practical engineering decisions while staying within project scope and time constraints.
 
 ---
 
@@ -20,7 +20,7 @@ The goal was to make practical engineering decisions while staying within assign
 
 ## Ambiguity
 
-The assignment requires multi-tenancy but does not explicitly define:
+The project requires multi-tenancy but does not explicitly define:
 
 * database isolation strategy
 * tenant authentication model
@@ -76,7 +76,6 @@ Rejected because:
 
 * too heavy for prototype scope
 * increases operational complexity
-* unnecessary for assignment
 
 ### Separate schema per tenant
 
@@ -97,7 +96,7 @@ Rejected because:
 
 ## Ambiguity
 
-The assignment requires:
+The project requires:
 
 ```text
 Scope 1 / Scope 2 / Scope 3 categorization
@@ -180,7 +179,7 @@ without requiring a full sustainability framework implementation.
 
 ## Ambiguity
 
-The assignment requires:
+The project requires:
 
 ```text
 source-of-truth tracking
@@ -257,7 +256,7 @@ was intentionally simplified.
 
 ## Ambiguity
 
-The assignment requires:
+The project requires:
 
 ```text
 unit normalization
@@ -336,7 +335,7 @@ regional conversion logic
 
 ## Ambiguity
 
-The assignment references real-world source systems:
+The project references real-world source systems:
 
 ```text
 SAP
@@ -380,7 +379,6 @@ CSV uploads are:
 * realistic for enterprise exports
 * easy to validate
 * quick to demonstrate
-* sufficient for assignment goals
 
 Many enterprise ESG workflows begin as exported CSVs before API integration.
 
@@ -396,7 +394,7 @@ Many enterprise ESG workflows begin as exported CSVs before API integration.
 
 ## Ambiguity
 
-The assignment references review and audit concepts but does not define workflow behavior.
+The project references review and audit concepts but does not define workflow behavior.
 
 Questions include:
 
@@ -449,7 +447,7 @@ without introducing RBAC or approval chains.
 
 ## Ambiguity
 
-The assignment mentions emissions tracking but does not define:
+The project mentions emissions tracking but does not define:
 
 * calculation methodology
 * emissions factor source
@@ -478,7 +476,7 @@ regional factors
 material-specific factors
 ```
 
-Implementing a realistic Scope 3 engine was considered out of assignment scope.
+Creating formulae for implementing a realistic Scope 3 engine is complex.
 
 ## What I Would Ask the PM
 
@@ -492,7 +490,7 @@ Implementing a realistic Scope 3 engine was considered out of assignment scope.
 
 ## Ambiguity
 
-The assignment requires deployment but does not specify hosting persistence expectations.
+The project requires deployment but does not specify hosting persistence expectations.
 
 Free Render instances may reset local storage.
 
@@ -528,7 +526,7 @@ This makes the deployed application usable for reviewers even if demo data reset
 
 # 9. Chosen Source Subset
 
-The assignment references three source domains:
+The project references three source domains:
 
 ```text
 SAP Procurement
@@ -606,7 +604,7 @@ Several features were intentionally simplified.
 
 Reason:
 
-This assignment appears to optimize for:
+This project appears to optimize for:
 
 ```text
 architecture thinking

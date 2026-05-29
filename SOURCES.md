@@ -2,7 +2,7 @@
 
 ## Overview
 
-The assignment requested support for three ESG-related source systems:
+The project requested support for three ESG-related source systems:
 
 ```text
 SAP Procurement
@@ -192,7 +192,7 @@ without reproducing a full billing platform.
 
 ## Why This Was Chosen
 
-The assignment prioritizes:
+The project prioritizes:
 
 ```text
 architecture thinking
@@ -382,7 +382,7 @@ fast deployment
 clear ingestion demonstration
 ```
 
-while staying aligned with assignment scope.
+while staying aligned with project scope.
 
 ---
 
