@@ -75,8 +75,9 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
+    "https://breathe-esg-assignment-git-master-shravya-a-s-projects.vercel.app",
+    "https://breathe-esg-assignment-r7baqa0hq-shravya-a-s-projects.vercel.app",
 ]
-
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
