@@ -397,15 +397,13 @@ Uploaded CSV activity records may not persist permanently in the free environmen
 
 ---
 
-# Additional Documentation
+## Additional Documentation
 
-See:
-
-```text
-MODEL.md
-DECISIONS.md
-TRADEOFFS.md
-SOURCES.md
-```
+| Document | Description |
+|-----------|-------------|
+| [MODEL.md](./MODEL.md) | Core data model, entities, relationships, and traceability design |
+| [DECISIONS.md](./DECISIONS.md) | Key architectural and implementation decisions |
+| [TRADEOFFS.md](./TRADEOFFS.md) | Design tradeoffs, limitations, and future enhancements |
+| [SOURCES.md](./SOURCES.md) | ESG references, assumptions, and source-system research |
 
 for detailed architecture, decisions, tradeoffs and research.
