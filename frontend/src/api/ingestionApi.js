@@ -12,7 +12,7 @@ export const uploadCsv = async ({
   formData.append("file", file);
 
   const response = await apiClient.post(
-    "/ingestion/upload/",
+    "/upload/",
     formData,
     {
       headers: {
