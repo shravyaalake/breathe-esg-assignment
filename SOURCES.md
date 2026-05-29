@@ -2,342 +2,409 @@
 
 ## Overview
 
-This document describes the reference materials, domain knowledge, assumptions, and sample data sources used while designing and implementing the Multi-Tenant ESG Emissions Data Ingestion & Tracking Platform.
-
-The project was developed as a demonstration of ESG emissions data ingestion, normalization, and traceability workflows rather than as a production-ready regulatory reporting system.
-
----
-
-# ESG Domain References
-
-The overall platform design was influenced by commonly accepted ESG and greenhouse gas accounting concepts.
-
-## Greenhouse Gas Protocol (GHG Protocol)
-
-The platform's emissions classification model follows the widely adopted concept of:
+The assignment requested support for three ESG-related source systems:
 
 ```text
-Scope 1
-Scope 2
-Scope 3
+SAP Procurement
+Utility Portal
+Travel Platform
 ```
 
-These categories provide the foundation for organizing emissions data across multiple business activities.
+The goal was not to reproduce enterprise systems exactly, but to model realistic ingestion patterns and understand how such systems would contribute ESG data.
 
-### Influence on the Project
+For each source:
 
-* Scope classification model
-* Emissions categorization
-* ESG reporting structure
-* Data normalization strategy
-
----
-
-# Source System Research
-
-The ingestion workflows were inspired by common enterprise data export patterns rather than direct integrations with live systems.
-
-The project simulates how ESG-related information is commonly extracted from operational systems.
+* a realistic export style was researched
+* a representative subset of fields was modeled
+* sample CSV data was created
+* limitations and real-world deployment concerns were documented
 
 ---
 
-## SAP Procurement Export
+# 1. SAP Procurement Export
 
-Represents procurement and supplier spend data.
+## What Was Researched
 
-Typical procurement exports may contain:
+Enterprise procurement systems such as SAP commonly export:
 
 ```text
-Supplier
-Purchase Category
-Spend Amount
+Purchase Orders
+Material Procurement
+Fuel Purchases
+Vendor Transactions
+Spend Data
+Invoices
+```
+
+Typical exports contain:
+
+```text
+purchase order
+plant/facility
+material code
+description
+quantity
+unit
+currency
+vendor
+posting date
+```
+
+CSV and spreadsheet exports are common for ESG reporting pipelines.
+
+## What Was Implemented
+
+Representative procurement upload data.
+
+Example fields:
+
+```text
+PurchaseOrder
+PurchaseOrderItem
+PostingDate
+PlantCode
+MaterialCode
+MaterialDescription
+Quantity
+Unit
+NetAmount
 Currency
-Business Unit
+VendorCode
 ```
 
-### Platform Usage
-
-Mapped to:
+Sample records include:
 
 ```text
-Scope 3
-Purchased Goods & Services
+Diesel Fuel
+Lubricant Oil
+Steel Raw Material
 ```
 
-### Purpose
+## Why These Fields Were Chosen
 
-Demonstrate ingestion of supplier-related emissions data and spend-based emissions calculations.
+These fields help demonstrate:
+
+```text
+facility attribution
+material tracking
+procurement activity
+scope classification
+basic ESG traceability
+```
+
+For example:
+
+```text
+Diesel procurement → Scope 1
+Material procurement → Scope 3
+```
+
+## Sample Data Characteristics
+
+Sample CSV intentionally contains:
+
+* realistic procurement naming
+* plant codes
+* vendor references
+* quantities and units
+* posting dates
+
+while remaining small enough for review/demo purposes.
+
+## What Would Break in Real Deployment
+
+A real SAP integration would require handling:
+
+```text
+multiple SAP schemas
+ERP-specific metadata
+currency normalization
+purchase lifecycle states
+invoice reconciliation
+missing data quality
+supplier mappings
+```
+
+Additionally:
+
+```text
+Scope categorization rules
+```
+
+would likely require configurable business logic.
 
 ---
 
-## Utility Portal Export
+# 2. Utility Portal Export
 
-Represents electricity consumption records typically exported from utility providers or energy management systems.
+## What Was Researched
 
-Typical exports may contain:
-
-```text
-Facility
-Billing Period
-Electricity Consumption
-Unit (kWh)
-```
-
-### Platform Usage
-
-Mapped to:
+Utility providers typically expose:
 
 ```text
-Scope 2
-Purchased Electricity
+electricity usage
+gas usage
+billing cycles
+meter readings
+consumption history
 ```
 
-### Purpose
+Exports often contain:
 
-Demonstrate ingestion of operational energy consumption data.
+```text
+facility
+meter
+date range
+energy consumed
+unit
+cost
+region
+```
+
+Many ESG systems calculate:
+
+```text
+Scope 2 emissions
+```
+
+from utility consumption.
+
+## What Was Implemented
+
+A simplified utility portal representation.
+
+Representative ingestion support includes:
+
+```text
+facility attribution
+activity normalization
+Scope categorization readiness
+CSV ingestion flow
+```
+
+The implementation models how utility data would move through:
+
+```text
+upload → normalization → review
+```
+
+without reproducing a full billing platform.
+
+## Why This Was Chosen
+
+The assignment prioritizes:
+
+```text
+architecture thinking
+data modeling
+ingestion flow
+```
+
+rather than reproducing enterprise utility software.
+
+The simplified structure demonstrates:
+
+```text
+multi-source ESG ingestion
+```
+
+while remaining manageable.
+
+## Sample Data Characteristics
+
+Representative sample shape:
+
+```text
+facility
+activity
+quantity
+unit
+timestamp/date
+```
+
+with normalization-ready units.
+
+## What Would Break in Real Deployment
+
+Real deployments would need:
+
+```text
+meter hierarchies
+regional tariffs
+billing corrections
+utility provider differences
+timezone handling
+estimated readings
+unit conversions
+electricity emission factors
+```
+
+Regional electricity emissions would also require:
+
+```text
+country/state-specific CO2e factors
+```
 
 ---
 
-## Travel Platform Export
+# 3. Travel Platform Export
 
-Represents business travel records.
+## What Was Researched
 
-Typical exports may contain:
-
-```text
-Traveler
-Travel Type
-Distance
-Trip Date
-```
-
-### Platform Usage
-
-Mapped to:
+Corporate travel systems commonly export:
 
 ```text
-Scope 3
-Business Travel
+employee travel
+flight bookings
+hotel stays
+transport mode
+trip distances
+travel spend
 ```
 
-### Purpose
+Example fields include:
 
-Demonstrate ingestion of employee travel-related emissions activities.
+```text
+booking date
+travel type
+origin
+destination
+distance
+transport mode
+cost
+employee/business unit
+```
+
+Travel data frequently contributes to:
+
+```text
+Scope 3 emissions
+```
+
+through business travel reporting.
+
+## What Was Implemented
+
+A simplified travel-platform representation.
+
+The prototype supports:
+
+```text
+CSV ingestion
+source attribution
+tenant ownership
+normalization pipeline
+review workflow
+```
+
+rather than complex travel calculations.
+
+## Why This Was Chosen
+
+Travel emissions often require:
+
+```text
+distance estimation
+carrier information
+hotel factors
+regional assumptions
+```
+
+which significantly increase complexity.
+
+A representative structure was implemented to demonstrate:
+
+```text
+multi-source ESG ingestion
+```
+
+without overengineering.
+
+## Sample Data Characteristics
+
+Representative travel-style fields:
+
+```text
+travel type
+facility/business unit
+distance
+unit
+travel date
+```
+
+kept intentionally lightweight for demonstration.
+
+## What Would Break in Real Deployment
+
+Real travel systems would require:
+
+```text
+airline integrations
+distance calculations
+flight class multipliers
+hotel emissions
+currency normalization
+travel policy mapping
+duplicate booking handling
+```
+
+Business travel emissions may also vary depending on:
+
+```text
+aircraft type
+seat class
+hotel energy model
+transport mode
+```
 
 ---
 
-# Sample Data Assumptions
+# Why CSV Was Chosen
 
-The application includes seeded demonstration data.
+Although modern enterprise systems expose APIs, CSV export/import remains common for ESG reporting.
 
-These records were created for evaluation and demonstration purposes and do not represent real organizational emissions data.
+Reasons:
+
+```text
+manual reporting workflows
+ERP exports
+monthly reporting batches
+compliance uploads
+vendor reporting pipelines
+```
+
+Using CSV upload provided:
+
+```text
+realistic enterprise behavior
+simple reviewability
+fast deployment
+clear ingestion demonstration
+```
+
+while staying aligned with assignment scope.
 
 ---
 
-## Demo Tenant
+# Final Observation
+
+This prototype intentionally models:
 
 ```text
-ABC Manufacturing Ltd
+representative ESG ingestion patterns
 ```
 
-Industry:
+rather than exact enterprise integrations.
+
+The objective was to demonstrate:
 
 ```text
-Automotive
+data modeling
+multi-tenancy
+traceability
+review workflow
+normalization thinking
+engineering judgment
 ```
 
-Purpose:
-
-Provide a realistic enterprise context for demonstrating multi-tenant ESG workflows.
-
----
-
-## Demo Facilities
-
-```text
-BLR01 - Bengaluru Plant
-PUN01 - Pune Plant
-CHE01 - Chennai Plant
-HYD01 - Hyderabad Plant
-MUM01 - Mumbai Plant
-DEL01 - Delhi Plant
-```
-
-Purpose:
-
-Simulate geographically distributed manufacturing operations.
-
----
-
-## Demo Source Systems
-
-```text
-SAP Procurement Export
-Utility Portal Export
-Travel Platform Export
-```
-
-Purpose:
-
-Represent common ESG data sources encountered in enterprise sustainability programs.
-
----
-
-# Emission Calculation Assumptions
-
-The platform uses a simplified emissions calculation model:
-
-```text
-Emissions (kgCO₂e)
-=
-Activity Data × Emission Factor
-```
-
-The objective is to demonstrate the ingestion and calculation workflow.
-
-### Examples
-
-#### Electricity
-
-```text
-kWh × Grid Emission Factor
-```
-
-#### Travel
-
-```text
-Distance × Travel Emission Factor
-```
-
-#### Procurement
-
-```text
-Spend × Spend-Based Emission Factor
-```
-
-### Important Note
-
-The emission factors used within the project are illustrative and intended for demonstration purposes only.
-
-The platform is not intended to provide regulatory-grade emissions accounting.
-
----
-
-# Technical References
-
-The implementation was built using documentation and standard usage patterns from the following technologies:
-
-## Frontend
-
-```text
-React
-Vite
-React Router
-Axios
-Tailwind CSS
-```
-
-Used for:
-
-* User interface
-* Routing
-* API communication
-* Styling
-
----
-
-## Backend
-
-```text
-Django
-Django REST Framework
-```
-
-Used for:
-
-* Data modeling
-* REST APIs
-* Validation
-* Business logic
-
----
-
-## Data Processing
-
-```text
-Pandas
-```
-
-Used for:
-
-* CSV parsing
-* Data transformation
-* Normalization workflows
-
----
-
-## Database
-
-```text
-PostgreSQL
-```
-
-Used for:
-
-* Relational data storage
-* Multi-tenant data management
-* Audit metadata storage
-
----
-
-# Data Limitations
-
-The following constraints apply to the project:
-
-## No Live Integrations
-
-The platform does not connect directly to:
-
-```text
-SAP APIs
-Utility Provider APIs
-Travel Management APIs
-```
-
-Instead, representative CSV exports are used.
-
----
-
-## No Regulatory Certification
-
-The platform is designed as a technical demonstration and should not be considered a certified ESG reporting solution.
-
----
-
-## Simplified Emission Factors
-
-Emission calculations use illustrative factors and assumptions.
-
-Real-world implementations would require:
-
-* Verified factor databases
-* Regional factors
-* Industry-specific methodologies
-* Periodic factor updates
-
----
-
-# Summary
-
-The platform combines ESG reporting concepts, common enterprise data export patterns, and modern web technologies to demonstrate a practical emissions data ingestion workflow.
-
-All sample organizations, facilities, source systems, and emissions data are provided for demonstration purposes and are intended to showcase:
-
-* Multi-tenancy
-* Data normalization
-* Scope classification
-* Source traceability
-* Auditability
-* ESG-focused reporting workflows
-
-rather than serve as authoritative environmental reporting data.
+through realistic but simplified source systems.

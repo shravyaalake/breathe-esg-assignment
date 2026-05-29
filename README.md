@@ -1,20 +1,97 @@
-# Multi-Tenant ESG Emissions Data Ingestion & Tracking Platform
+# Breathe ESG Assignment
 
-## Overview
+A lightweight ESG (Environmental, Social and Governance) emissions ingestion and review platform built as part of the Breathe ESG technical assignment.
 
-The Multi-Tenant ESG Emissions Data Ingestion & Tracking Platform is a web application designed to ingest emissions-related data from multiple enterprise source systems, normalize the data into a standardized ESG model, classify emissions into Scope 1, Scope 2, and Scope 3 categories, and maintain complete traceability back to the original source data.
+The application demonstrates:
 
-The platform demonstrates how organizations can consolidate sustainability-related information from disparate operational systems into a unified ESG reporting workflow.
+* multi-tenant ESG data ingestion
+* CSV-based ingestion from multiple source systems
+* Scope 1 / Scope 2 / Scope 3 categorization
+* normalization pipeline
+* source-of-truth tracking
+* review workflow
+* audit-ready activity lifecycle
+* deployed frontend + backend
 
 ---
 
-## Key Features
+# Live Deployment
 
-### Multi-Tenant Architecture
+Frontend:
 
-The platform supports multiple organizations through tenant-scoped data isolation.
+```text
+<PASTE_FRONTEND_URL_HERE>
+```
 
-Current demo tenant:
+Backend API:
+
+```text
+<PASTE_BACKEND_URL_HERE>
+```
+
+Admin Panel:
+
+```text
+<PASTE_BACKEND_URL_HERE>/admin
+```
+
+---
+
+# Demo Credentials
+
+Admin credentials:
+
+```text
+username: admin
+password: <YOUR_PASSWORD>
+```
+
+(Replace with your actual credentials or remove if not required.)
+
+---
+
+# Problem Statement
+
+Organizations receive ESG-related operational data from multiple systems:
+
+```text
+SAP Procurement
+Utility Portals
+Travel Platforms
+```
+
+These systems export data in inconsistent formats and units.
+
+The challenge is to:
+
+```text
+ingest
+normalize
+categorize
+review
+trace
+```
+
+ESG activity data across tenants and facilities.
+
+This project demonstrates a practical architecture for handling this flow.
+
+---
+
+# Features Implemented
+
+## 1. Multi-Tenant Data Model
+
+Supports tenant ownership for:
+
+```text
+Facilities
+Source Systems
+Uploads
+Activities
+```
+
+Example tenant:
 
 ```text
 ABC Manufacturing Ltd
@@ -22,355 +99,198 @@ ABC Manufacturing Ltd
 
 ---
 
-### ESG Data Ingestion
+## 2. CSV Upload / Ingestion
 
-Upload emissions-related CSV files through the web interface.
-
-Supported workflow:
+Supports ingestion through:
 
 ```text
 CSV Upload
-     ↓
-Validation
-     ↓
-Parsing
-     ↓
-Normalization
-     ↓
-Scope Classification
-     ↓
-Emission Calculation
-     ↓
-Storage
+```
+
+Supported demo source systems:
+
+```text
+SAP Procurement Export
+Utility Portal Export
+Travel Platform Export
+```
+
+Upload fields:
+
+```text
+Tenant ID
+Source System ID
+CSV file
 ```
 
 ---
 
-### Multiple Source Systems
+## 3. ESG Scope Categorization
 
-The platform currently supports:
-
-#### SAP Procurement Export
-
-Represents:
+Supports:
 
 ```text
-Supplier Procurement
-Purchased Goods
-Vendor Spend
-```
-
-Mapped to:
-
-```text
-Scope 3
-```
-
----
-
-#### Utility Portal Export
-
-Represents:
-
-```text
-Electricity Consumption
-Energy Usage
-Utility Bills
-```
-
-Mapped to:
-
-```text
+Scope 1
 Scope 2
-```
-
----
-
-#### Travel Platform Export
-
-Represents:
-
-```text
-Business Travel
-Employee Travel
-```
-
-Mapped to:
-
-```text
 Scope 3
 ```
 
----
-
-### ESG Scope Classification
-
-The system classifies emissions according to the GHG Protocol framework.
-
-#### Scope 1
-
-Direct emissions:
+Example mapping:
 
 ```text
-Fuel Combustion
-Diesel Usage
-Natural Gas
-```
-
-#### Scope 2
-
-Purchased electricity:
-
-```text
-Electricity Consumption
-Grid Power
-Utility Usage
-```
-
-#### Scope 3
-
-Indirect value-chain emissions:
-
-```text
-Procurement
-Business Travel
-Supplier Activities
+Diesel Fuel → Scope 1
+Procurement Activity → Scope 3
 ```
 
 ---
 
-### Data Normalization
+## 4. Activity Review Workflow
 
-Data from different source systems is transformed into a standardized ESG structure.
-
-Normalized record format:
+Review lifecycle:
 
 ```text
-Activity Data
-Unit
-Emission Factor
-CO₂e Emissions
-Scope
-Facility
-Tenant
-Source System
+PENDING
+APPROVED
+REJECTED
+LOCKED
 ```
 
-This enables consistent reporting and analytics across heterogeneous data sources.
-
----
-
-### Source Traceability
-
-Every emission record retains metadata linking it back to its origin.
-
-Tracked information includes:
+Actions available:
 
 ```text
-Tenant
-Facility
-Source System
-Upload Timestamp
-Original File
-```
-
-Traceability chain:
-
-```text
-Emission Record
-      ↓
-Upload Batch
-      ↓
-Original CSV
-      ↓
-Source System
+Approve
+Reject
+Lock
 ```
 
 ---
 
-### Auditability
+## 5. Source-of-Truth Tracking
 
-The platform stores metadata required for audit and compliance workflows.
-
-Examples:
+Each activity can be traced back to:
 
 ```text
-created_at
 tenant
 facility
-source_system
-upload_timestamp
+source system
+ingestion batch
+timestamps
+review status
+```
+
+This supports auditability and traceability.
+
+---
+
+## 6. Unit Normalization
+
+Supports normalization-ready quantities and units.
+
+Example:
+
+```text
+litre
+litres
+L
+```
+
+normalized into:
+
+```text
+L
+```
+
+Supported sample units:
+
+```text
+L
+KG
+EA
 ```
 
 ---
 
-## System Architecture
+# Tech Stack
+
+## Backend
 
 ```text
-Frontend (React + Vite)
-           ↓
-      REST APIs
-           ↓
+Python
+Django
 Django REST Framework
-           ↓
-Business Logic Layer
-           ↓
-PostgreSQL Database
+PostgreSQL
+```
+
+## Frontend
+
+```text
+React
+Vite
+Axios
+Tailwind CSS
+```
+
+## Deployment
+
+```text
+Render (backend)
+Vercel (frontend)
 ```
 
 ---
 
-## Technology Stack
-
-### Frontend
-
-* React
-* Vite
-* Axios
-* React Router
-* Tailwind CSS
-
-### Backend
-
-* Django
-* Django REST Framework
-* Pandas
-
-### Database
-
-* PostgreSQL
-
-### Deployment
-
-* Frontend: Vercel
-* Backend: Render
-* Database: PostgreSQL
-
----
-
-## Data Model
-
-The platform is built around the following core entities:
-
-### Tenant
-
-Represents an organization using the platform.
-
-### Facility
-
-Represents a physical operational location.
-
-### Source System
-
-Represents the origin of uploaded ESG data.
-
-### Upload Batch
-
-Represents an ingestion event.
-
-### Emission Record
-
-Represents a normalized emissions activity record.
-
-Relationship overview:
+# Architecture Overview
 
 ```text
-Tenant
- ├── Facilities
- ├── Source Systems
- ├── Upload Batches
- └── Emission Records
-```
-
-Additional design details are documented in:
-
-```text
-MODEL.md
+CSV Upload
+      ↓
+Raw Record Storage
+      ↓
+Normalization
+      ↓
+Scope Categorization
+      ↓
+Review Workflow
+      ↓
+Dashboard / Activity Review
 ```
 
 ---
 
-## Emission Calculation
-
-The platform uses a simplified emissions calculation model:
+# Project Structure
 
 ```text
-Emissions (kgCO₂e)
-=
-Activity Data × Emission Factor
+backend/
+    audit/
+    config/
+    dashboard/
+    ingestion/
+    normalization/
+    review/
+    sources/
+    tenants/
+
+frontend/
+
+sample-data/
 ```
-
-Examples:
-
-### Electricity
-
-```text
-kWh × Grid Emission Factor
-```
-
-### Travel
-
-```text
-Distance × Travel Emission Factor
-```
-
-### Procurement
-
-```text
-Spend × Spend-Based Factor
-```
-
-The calculation logic is intended for demonstration purposes and does not represent regulatory-grade emissions accounting.
 
 ---
 
-## Running Locally
+# Running Locally
 
-### Prerequisites
-
-* Python 3.12+
-* Node.js 18+
-* PostgreSQL
-
----
-
-### Backend Setup
-
-Navigate to the backend directory:
-
-```bash
-cd backend
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Activate the environment:
-
-#### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-#### Linux / macOS
-
-```bash
-source venv/bin/activate
-```
+## Backend
 
 Install dependencies:
 
 ```bash
-pip install -r ../requirements.txt
+pip install -r requirements.txt
 ```
 
-Apply migrations:
+Run migrations:
 
 ```bash
+cd backend
 python manage.py migrate
 ```
 
@@ -380,13 +300,13 @@ Seed demo data:
 python manage.py seed_demo_data
 ```
 
-Start the server:
+Run server:
 
 ```bash
 python manage.py runserver
 ```
 
-Backend runs on:
+Backend:
 
 ```text
 http://localhost:8000
@@ -394,13 +314,7 @@ http://localhost:8000
 
 ---
 
-### Frontend Setup
-
-Navigate to frontend:
-
-```bash
-cd frontend
-```
+## Frontend
 
 Install dependencies:
 
@@ -408,13 +322,13 @@ Install dependencies:
 npm install
 ```
 
-Start development server:
+Run frontend:
 
 ```bash
 npm run dev
 ```
 
-Frontend runs on:
+Frontend:
 
 ```text
 http://localhost:5173
@@ -422,167 +336,76 @@ http://localhost:5173
 
 ---
 
-## Demo Data
+# Demo Instructions
 
-The application includes seeded demo data.
+Because the deployed environment automatically seeds demo master data after redeployment, use:
 
-### Tenant
-
-```text
-ABC Manufacturing Ltd
-```
-
-### Facilities
+Tenant ID:
 
 ```text
-BLR01 - Bengaluru Plant
-PUN01 - Pune Plant
-CHE01 - Chennai Plant
-HYD01 - Hyderabad Plant
-MUM01 - Mumbai Plant
-DEL01 - Delhi Plant
+1
 ```
 
-### Source Systems
+Source System ID:
 
 ```text
-SAP Procurement Export
-Utility Portal Export
-Travel Platform Export
+1
 ```
 
----
+for the included sample SAP procurement CSV.
 
-## Deployment
+Steps:
 
-### Backend
-
-Hosted on Render.
-
-Deployment steps:
-
-```bash
-python manage.py migrate
-python manage.py seed_demo_data
-python manage.py collectstatic --no-input
-```
-
-### Frontend
-
-Hosted on Vercel.
-
----
-
-## Demo Workflow
-
-### Step 1
-
-Open the application.
-
----
-
-### Step 2
-
-Select:
+1. Open CSV Upload
+2. Use:
 
 ```text
-Tenant: ABC Manufacturing Ltd
+Tenant ID = 1
+Source System ID = 1
 ```
 
+3. Upload sample CSV
+4. Open Activity Review
+5. Review normalized activities
+6. Approve / Reject / Lock records
+
 ---
 
-### Step 3
+# Known Limitation
 
-Choose a source system:
+The backend is deployed on a free Render instance.
+
+Free deployments may sleep after inactivity and redeploy demo master data.
+
+To ensure reviewer usability:
 
 ```text
-SAP Procurement Export
-Utility Portal Export
-Travel Platform Export
+seed_demo_data
 ```
 
----
-
-### Step 4
-
-Upload a sample CSV file.
-
----
-
-### Step 5
-
-Verify successful ingestion.
-
----
-
-### Step 6
-
-Review:
-
-* Emission Records
-* Scope Classification
-* Audit Information
-* Dashboard Data
-
----
-
-## Assumptions
-
-* CSV files are used as representative enterprise exports.
-* Scope mappings are predefined.
-* Emission factors are simplified for demonstration.
-* Demo data is automatically seeded during deployment.
-* The platform focuses on emissions tracking rather than full ESG disclosure workflows.
-
----
-
-## Limitations
-
-Current implementation intentionally excludes:
-
-* Live ERP integrations
-* Utility provider APIs
-* Single Sign-On (SSO)
-* Role-based access control
-* Workflow approvals
-* Advanced ESG reporting exports
-* Regulatory disclosure generation
-
-These decisions are documented in:
+automatically restores:
 
 ```text
+Tenant
+Facilities
+Source Systems
+```
+
+after redeployment.
+
+Uploaded CSV activity records may not persist permanently in the free environment.
+
+---
+
+# Additional Documentation
+
+See:
+
+```text
+MODEL.md
+DECISIONS.md
 TRADEOFFS.md
+SOURCES.md
 ```
 
----
-
-
-## Additional Documentation
-
-| Document | Description |
-|-----------|-------------|
-| [MODEL.md](./MODEL.md) | Core data model, entities, relationships, and traceability design |
-| [DECISIONS.md](./DECISIONS.md) | Key architectural and implementation decisions |
-| [TRADEOFFS.md](./TRADEOFFS.md) | Design tradeoffs, limitations, and future enhancements |
-| [SOURCES.md](./SOURCES.md) | ESG references, assumptions, and source-system research |
-
----
-
-## Future Enhancements
-
-Potential next steps include:
-
-* Real ERP integrations
-* Automated ingestion pipelines
-* Role-based access control
-* Configurable emission factors
-* Advanced analytics dashboards
-* Regulatory reporting exports
-* Multi-region emission factor support
-* Approval workflows
-
----
-
-## Conclusion
-
-This project demonstrates a practical ESG data ingestion architecture that combines multi-tenancy, emissions normalization, scope classification, auditability, and source traceability into a unified platform. The design emphasizes extensibility, transparency, and simplicity while providing a strong foundation for future ESG reporting and sustainability management workflows.
+for detailed architecture, decisions, tradeoffs and research.

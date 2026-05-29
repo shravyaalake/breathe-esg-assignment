@@ -2,387 +2,207 @@
 
 ## Overview
 
-This document outlines the major tradeoffs made during the design and implementation of the Multi-Tenant ESG Emissions Data Ingestion & Tracking Platform.
+Given the limited scope and time of an engineering assignment, several production-grade features were intentionally not implemented.
 
-The project was developed with a focus on delivering a working, extensible, and auditable ESG ingestion system within a limited implementation timeline. As a result, several design decisions favor simplicity, maintainability, and demonstration value over full enterprise-scale functionality.
+The goal was to prioritize:
 
----
+* a working deployed system
+* clean architecture
+* meaningful data modeling
+* traceability
+* multi-tenancy support
+* review workflow demonstration
 
-# 1. CSV-Based Ingestion vs Direct System Integrations
-
-## Chosen Approach
-
-CSV file uploads through the web interface.
-
-## Alternative
-
-Direct integrations with:
-
-* SAP APIs
-* Utility provider APIs
-* Travel management platforms
-* Enterprise data warehouses
-
-## Why This Choice Was Made
-
-CSV exports are a common denominator across enterprise systems and provide a practical way to demonstrate ingestion workflows without requiring access to proprietary systems.
-
-### Advantages
-
-* Faster implementation
-* Easier testing
-* Simpler deployment
-* No dependency on external systems
-
-### Limitations
-
-* No real-time synchronization
-* Manual upload process
-* Limited automation
-
-### Future Enhancement
-
-Introduce scheduled connectors and API-based integrations.
+instead of attempting enterprise completeness.
 
 ---
 
-# 2. Shared Database Multi-Tenancy vs Tenant-Specific Databases
+# 1. Full Audit Versioning / Immutable History
 
-## Chosen Approach
+## Not Built
 
-Single PostgreSQL database with tenant-scoped records.
+A complete immutable audit system for every record change.
 
-## Alternative
+Example:
 
-Separate database per tenant.
+```text
+Before:
+Quantity = 100
 
-## Why This Choice Was Made
+After:
+Quantity = 120
 
-The shared-database approach significantly reduces operational complexity while still supporting logical tenant isolation.
+Changed by:
+user@email.com
 
-### Advantages
+Reason:
+Correction from supplier report
+```
 
-* Simpler deployment
-* Lower infrastructure cost
-* Easier maintenance
-* Faster development
+The current implementation tracks:
 
-### Limitations
+* source system
+* ingestion batch
+* timestamps
+* review status
 
-* Requires strict tenant filtering
-* Less isolation than dedicated databases
+but does not maintain a permanent edit timeline for every field change.
 
-### Future Enhancement
+## Why
 
-Support schema-per-tenant or database-per-tenant architectures for larger deployments.
+A proper audit/versioning system requires:
 
----
+* immutable history tables
+* version snapshots
+* change diffs
+* actor tracking
+* rollback logic
 
-# 3. Simplified ESG Data Model vs Full ESG Framework Coverage
+This significantly increases implementation complexity.
 
-## Chosen Approach
+For assignment scope, demonstrating source-of-truth tracking and review status was prioritized.
 
-Support core ESG emissions tracking focused on Scope 1, Scope 2, and Scope 3 emissions.
+## Future Improvement
 
-## Alternative
+Introduce:
 
-Comprehensive ESG platform supporting:
+```text
+ActivityVersion
+AuditEvent
+ChangeHistory
+```
 
-* Environmental metrics
-* Social indicators
-* Governance metrics
-* Regulatory disclosures
-* Sustainability reporting frameworks
-
-## Why This Choice Was Made
-
-The assignment primarily focuses on emissions data ingestion and normalization.
-
-A narrower scope enabled deeper implementation of ingestion, traceability, and auditability features.
-
-### Advantages
-
-* Clear problem focus
-* Faster implementation
-* Simpler user experience
-
-### Limitations
-
-* Does not cover broader ESG reporting requirements
-
-### Future Enhancement
-
-Extend the model to support additional ESG dimensions and reporting standards.
+tables to support regulatory-grade traceability.
 
 ---
 
-# 4. Rule-Based Scope Classification vs Dynamic Classification Engine
+# 2. Production-Grade Authentication & RBAC
 
-## Chosen Approach
+## Not Built
 
-Predefined mappings between source systems and ESG scopes.
+Role-based access control and authentication.
 
 Examples:
 
 ```text
-Utility Data → Scope 2
-Procurement Data → Scope 3
-Travel Data → Scope 3
+Admin
+Reviewer
+Auditor
+Tenant User
 ```
 
-## Alternative
+Currently, the prototype demonstrates review actions but does not restrict access by role.
 
-Configurable classification engine with user-defined rules.
+## Why
 
-## Why This Choice Was Made
+A complete authorization system would require:
 
-The current set of source systems has predictable classifications.
+* authentication provider integration
+* permissions model
+* tenant-aware access rules
+* protected APIs
+* role management UI
 
-A simple mapping approach reduced implementation complexity.
+The assignment did not explicitly require authentication.
 
-### Advantages
-
-* Easy to understand
-* Easy to maintain
-* Consistent results
-
-### Limitations
-
-* Limited flexibility
-* Not suitable for highly customized reporting requirements
-
-### Future Enhancement
-
-Introduce configurable classification rules and approval workflows.
-
----
-
-# 5. Simplified Emission Factors vs Regulatory-Grade Calculations
-
-## Chosen Approach
-
-Use a generalized calculation model:
+Priority was given to:
 
 ```text
-Emissions = Activity Data × Emission Factor
+multi-tenancy
+ingestion
+normalization
+review workflow
+deployment
 ```
 
-## Alternative
+instead of access control.
 
-Integration with:
+## Future Improvement
 
-* Regional emission factor databases
-* Government datasets
-* Industry-specific factor catalogs
-* Time-dependent factor calculations
-
-## Why This Choice Was Made
-
-The objective was to demonstrate the ingestion and calculation workflow rather than provide production-grade emissions accounting.
-
-### Advantages
-
-* Simpler implementation
-* Easier testing
-* Consistent calculation model
-
-### Limitations
-
-* Not suitable for regulatory reporting
-* Emission factors may not reflect real-world variability
-
-### Future Enhancement
-
-Integrate verified emission factor libraries and regional datasets.
-
----
-
-# 6. Audit Metadata vs Full Audit Logging
-
-## Chosen Approach
-
-Store key metadata including:
+Add:
 
 ```text
-Tenant
-Facility
-Source System
-Upload Timestamp
-Creation Timestamp
+JWT authentication
+RBAC
+tenant-level authorization
+reviewer permissions
+admin-only workflows
 ```
 
-## Alternative
-
-Full change-history tracking for every record update and deletion.
-
-## Why This Choice Was Made
-
-The implemented metadata provides traceability while keeping the data model lightweight.
-
-### Advantages
-
-* Lower complexity
-* Smaller storage footprint
-* Easier implementation
-
-### Limitations
-
-* Limited historical reconstruction
-* No version history for record edits
-
-### Future Enhancement
-
-Implement versioned audit logs and change tracking.
-
 ---
 
-# 7. Seeded Demo Data vs Persistent Demo Environment
+# 3. Advanced ESG Emissions Engine
 
-## Chosen Approach
+## Not Built
 
-Automatically recreate demo master data during deployment.
+A production-level emissions calculation engine.
 
-```bash
-python manage.py seed_demo_data
-```
-
-## Alternative
-
-Maintain a permanently managed demo environment.
-
-## Why This Choice Was Made
-
-Free-tier deployment platforms may restart instances or redeploy applications.
-
-Automatic seeding guarantees a consistent evaluation experience.
-
-### Advantages
-
-* Reliable demo setup
-* Reduced reviewer friction
-* Faster onboarding
-
-### Limitations
-
-* Demo data is not user-generated
-* Uploaded data may not persist indefinitely
-
-### Future Enhancement
-
-Persist demo uploads and provide environment snapshots.
-
----
-
-# 8. REST APIs vs GraphQL
-
-## Chosen Approach
-
-Django REST Framework APIs.
-
-## Alternative
-
-GraphQL API layer.
-
-## Why This Choice Was Made
-
-REST is straightforward, widely understood, and well-supported by Django REST Framework.
-
-### Advantages
-
-* Fast development
-* Mature tooling
-* Simpler frontend integration
-
-### Limitations
-
-* Less flexible querying
-* Potential over-fetching
-
-### Future Enhancement
-
-Introduce GraphQL for advanced reporting and analytics use cases.
-
----
-
-# 9. PostgreSQL Relational Model vs Data Lake Architecture
-
-## Chosen Approach
-
-Structured relational storage using PostgreSQL.
-
-## Alternative
-
-Data lake or document-based architecture.
-
-## Why This Choice Was Made
-
-The platform contains well-defined relationships between:
+Examples intentionally excluded:
 
 ```text
-Tenant
-Facility
-Source System
-Upload
-Emission Record
+supplier-specific emission factors
+regional electricity factors
+hotel/travel emission logic
+spend-based procurement emissions
+versioned emissions libraries
+automatic factor updates
 ```
 
-A relational model naturally fits these requirements.
+The implementation currently demonstrates:
 
-### Advantages
+* Scope categorization
+* basic CO2e calculation support
+* normalized activities
+* ingestion-to-review flow
 
-* Strong consistency
-* Clear relationships
-* Mature ecosystem
+## Why
 
-### Limitations
+Real ESG emissions systems are highly complex.
 
-* Less flexible for highly unstructured ESG datasets
+Production implementations usually require:
 
-### Future Enhancement
+```text
+GHG Protocol mapping
+regional datasets
+factor libraries
+industry-specific calculations
+regulatory validation
+```
 
-Introduce hybrid storage for large-scale analytical workloads.
+Building this fully was outside assignment scope.
 
----
+Priority was given to demonstrating:
 
-# 10. Assignment-Focused Scope vs Enterprise Platform Scope
+```text
+architecture
+data flow
+traceability
+review lifecycle
+multi-source ingestion
+```
 
-## Chosen Approach
+## Future Improvement
 
-Prioritize:
+Add:
 
-* Data ingestion
-* Normalization
-* Traceability
-* Auditability
-* Scope classification
-
-## Excluded Features
-
-The following were intentionally not implemented:
-
-* Real ERP integrations
-* Single Sign-On (SSO)
-* Role-based access control
-* Workflow approvals
-* Regulatory disclosure generation
-* Advanced analytics
-* Forecasting models
-* Automated ESG reporting exports
-
-## Why This Choice Was Made
-
-Given the available time, focusing on core ESG data ingestion produced a more complete and reliable solution than attempting a broader but partially implemented platform.
+```text
+emission factor database
+configurable calculation engine
+region-aware factors
+supplier-level Scope 3 estimation
+transparent calculation breakdowns
+```
 
 ---
 
-# Conclusion
+# Final Note
 
-The platform intentionally prioritizes:
+These tradeoffs were deliberate.
 
-1. Simplicity
-2. Demonstrability
-3. Auditability
-4. Traceability
-5. Extensibility
+The focus was to build:
 
-Several enterprise-scale features were deferred in favor of delivering a robust ingestion and normalization pipeline. The current architecture provides a strong foundation for future expansion while remaining practical to implement, evaluate, and maintain.
+```text
+a working, deployable, explainable ESG prototype
+```
+
+with strong architectural foundations rather than attempting incomplete enterprise-scale functionality.
