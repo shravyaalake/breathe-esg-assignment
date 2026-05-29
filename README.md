@@ -20,19 +20,14 @@ The application demonstrates:
 Frontend:
 
 ```text
-<PASTE_FRONTEND_URL_HERE>
+https://breathe-esg-assignment-omega.vercel.app/
 ```
 
-Backend API:
-
-```text
-<PASTE_BACKEND_URL_HERE>
-```
 
 Admin Panel:
 
 ```text
-<PASTE_BACKEND_URL_HERE>/admin
+https://breathe-esg-assignment-g4i4.onrender.com/admin/
 ```
 
 ---
