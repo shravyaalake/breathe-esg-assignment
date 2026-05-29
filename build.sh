@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-pip install -r requirements.txt
+set -o errexit
 
 cd backend
 
+pip install -r ../requirements.txt
+
 python manage.py migrate
-python manage.py collectstatic --noinput
+
+python manage.py collectstatic --no-input
+
+python manage.py createsuperuser \
+  --noinput || true
