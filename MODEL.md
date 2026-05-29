@@ -534,8 +534,6 @@ The prototype intentionally keeps some areas simple:
 7. No permanent file storage for uploaded CSV files.
 8. No full production-grade PostgreSQL migration documentation in the prototype docs.
 
-These are acceptable tradeoffs for the assignment scope because the focus is on demonstrating architecture, data modeling, ingestion, normalization, review, and dashboard APIs.
-
 ---
 
 ## Production Improvements
