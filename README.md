@@ -556,42 +556,15 @@ TRADEOFFS.md
 
 ---
 
+
 ## Additional Documentation
 
-### MODEL.md
-
-Explains:
-
-* Core entities
-* Relationships
-* Multi-tenancy
-* Scope classification
-* Traceability model
-
-### DECISIONS.md
-
-Explains:
-
-* Architectural decisions
-* Technology choices
-* Data modeling rationale
-
-### TRADEOFFS.md
-
-Explains:
-
-* Simplifications
-* Design compromises
-* Future improvements
-
-### SOURCES.md
-
-Explains:
-
-* ESG domain references
-* Data assumptions
-* Source-system research
-* Technical references
+| Document | Description |
+|-----------|-------------|
+| [MODEL.md](./MODEL.md) | Core data model, entities, relationships, and traceability design |
+| [DECISIONS.md](./DECISIONS.md) | Key architectural and implementation decisions |
+| [TRADEOFFS.md](./TRADEOFFS.md) | Design tradeoffs, limitations, and future enhancements |
+| [SOURCES.md](./SOURCES.md) | ESG references, assumptions, and source-system research |
 
 ---
 
